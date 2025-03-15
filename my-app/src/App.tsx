@@ -6,8 +6,6 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Route, Routes } from 'react-router';
 
-
-
 function App() {
   return (
     <div className="flex flex-column justify-content-between min-h-screen mx-3">
