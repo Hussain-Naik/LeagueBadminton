@@ -5,11 +5,13 @@ import 'primereact/resources/primereact.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import { Route, Routes } from 'react-router';
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <div className="flex flex-column justify-content-between min-h-screen mx-3">
-          {/* <Header /> */}
+          <Header />
           <main className='col-12 md:col-6 flex-grow-1 m-auto p-0'>
             <Routes>
             <Route index element={<h1>Home</h1>} />
@@ -19,7 +21,7 @@ function App() {
             <Route path="*" element={<h1>Not found</h1>} />
             </Routes>
           </main>
-          {/* <Footer /> */}
+          <Footer />
         </div>
   );
 }
