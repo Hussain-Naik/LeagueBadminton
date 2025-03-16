@@ -1,5 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { PrimeReactProvider } from "primereact/api";
+import "primeflex/primeflex.css";
+import "primereact/resources/primereact.css";
+import "primeicons/primeicons.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router";
@@ -14,7 +19,9 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <PrimeReactProvider>
+          <App />
+        </PrimeReactProvider>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

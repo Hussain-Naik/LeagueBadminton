@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router";
 import MyButtons from "./MyButtons";
 
 const Footer: React.FC = () => {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState<boolean>(false);
   const navigate = useNavigate();
   const location = useLocation();
 
