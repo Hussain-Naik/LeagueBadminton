@@ -2,6 +2,7 @@ import React, { JSX, useEffect, useState } from "react";
 import { Toolbar } from "primereact/toolbar";
 import { useLocation, useNavigate } from "react-router";
 import MyButtons from "./MyButtons";
+import CreateLeague from "../pages/league/CreateLeague";
 
 const Footer: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -39,6 +40,14 @@ const Footer: React.FC = () => {
     </div>
   );
 
+    const createComponents =
+      location.pathname === "/" ? (
+        <CreateLeague visible={visible} setVisible={() => setVisible(!visible)} />
+      ) : (
+        // <CreateSession visible={visible} setVisible={setVisible} />
+        null
+      );
+
   return (
     <div className="card sticky bottom-0">
       <Toolbar
@@ -50,6 +59,7 @@ const Footer: React.FC = () => {
             "linear-gradient(to right, var(--bluegray-500), var(--bluegray-800))",
         }}
       />
+      {createComponents}
     </div>
   );
 };
