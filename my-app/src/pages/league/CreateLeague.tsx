@@ -32,7 +32,7 @@ const CreateLeague: React.FC<CreateProps> = ({ visible, setVisible }) => {
     } catch (error) {}
   };
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setIName(event.target.value);
   };
 
@@ -55,11 +55,11 @@ const CreateLeague: React.FC<CreateProps> = ({ visible, setVisible }) => {
             }}
           >
             <div className="inline-flex flex-column gap-2">
-              {/* <FloatLabel>
+              <FloatLabel>
                 <InputText
                   value={iName}
                   onChange={handleChange}
-                  label="Name"
+                  // label="Name"
                   name="name"
                   className="bg-white-alpha-20 border-none p-3 text-primary-50"
                 ></InputText>
@@ -69,7 +69,7 @@ const CreateLeague: React.FC<CreateProps> = ({ visible, setVisible }) => {
                 >
                   League Name
                 </label>
-              </FloatLabel> */}
+              </FloatLabel>
             </div>
             <div className="flex align-items-center gap-2">
               <Button

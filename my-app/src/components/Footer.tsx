@@ -3,6 +3,7 @@ import { Toolbar } from "primereact/toolbar";
 import { useLocation, useNavigate } from "react-router";
 import MyButtons from "./MyButtons";
 import CreateLeague from "../pages/league/CreateLeague";
+import CreateSession from "../pages/session/CreateSession";
 
 const Footer: React.FC = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -44,8 +45,7 @@ const Footer: React.FC = () => {
       location.pathname === "/" ? (
         <CreateLeague visible={visible} setVisible={() => setVisible(!visible)} />
       ) : (
-        // <CreateSession visible={visible} setVisible={setVisible} />
-        null
+        <CreateSession visible={visible} setVisible={() => setVisible(!visible)} />
       );
 
   return (

@@ -29,14 +29,12 @@ const League: React.FC = () => {
 
   const handleMount = async () => {
     try {
-    //   const { leaderboardAPI }: any = await axiosAPI.post(
-    //     `/exec?e=PARTICIPANTS&q=${league.id}&f=league`
-    //   );
       await axiosAPI.post(
         `/exec?e=PARTICIPANTS&q=${league.id}&f=league`
       );
       var { data } = await axiosReq.get("");
       setLeaderboards(data);
+      console.log(data)
       await axiosAPI.post(
         `/exec?e=SESSIONS&q=${league.id}&f=league`
       );
