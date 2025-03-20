@@ -7,12 +7,19 @@ import Home from "./pages/home/Home";
 import League from "./pages/league/League";
 import Session from "./pages/session/Session";
 import SessionSetting from "./pages/session/SessionSetting";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "primereact/button";
+import { setLeague } from "./reducers/leagueSlice";
 
 function App() {
+  const league = useSelector((state:any) => state.league)
+  const dispatch = useDispatch()
+  console.log(league)
   return (
     <div className="flex flex-column justify-content-between min-h-screen mx-3">
       <Header />
       <main className="col-12 md:col-6 flex-grow-1 m-auto p-0">
+        <Button onClick={() => dispatch(setLeague("New League"))}/>
         <Routes>
           <Route index element={<Home />} />
           <Route path="league" element={<League />} />
