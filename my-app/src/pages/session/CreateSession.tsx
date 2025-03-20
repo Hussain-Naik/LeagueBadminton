@@ -10,13 +10,17 @@ interface CreateProps {
 }
 
 const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
-  const [date, setDate] = useState(null);
-//   const { sessionContext, setSessionContext } = useSessionContext();
+  const [date, setDate] = useState<any>();
+  const [sessionContext, setSessionContext ] = useState<any>({});
   const navigate = useNavigate();
 
   const handleClick = (e:any) => {
     setDate(e.value);
   };
+
+  const setSessionToken = (data:any) => {
+    localStorage.setItem('leagueSessionToken', JSON.stringify(data))
+  }
 
   return (
     <div>
@@ -51,16 +55,16 @@ const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
               <Button
                 label="Submit"
                 onClick={() => {
-                //   setSessionContext({
-                //     ...sessionContext,
-                //     name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
-                //     date: date
-                //   });
-                //   setSessionToken({
-                //     ...sessionContext,
-                //     name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
-                //     date: date
-                //   });
+                  setSessionContext({
+                    ...sessionContext,
+                    name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
+                    date: date
+                  });
+                  setSessionToken({
+                    ...sessionContext,
+                    name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
+                    date: date
+                  });
                   setVisible();
                   navigate("/session/create/");
                 }}

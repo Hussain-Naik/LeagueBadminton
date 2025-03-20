@@ -29,10 +29,6 @@ const Session: React.FC = () => {
   const [games, setGames] = useState<any[]>([]);
   const [leaderboards, setLeaderboards] = useState<SessionLeaderboardType>({});
 
-  const setSessionLeaderboard = (data:any) => {
-    localStorage.setItem('sessionLeaderboard', JSON.stringify(data))
-  }
-
   const handleMount = async () => {
     try {
       await axiosAPI.post(
@@ -43,7 +39,6 @@ const Session: React.FC = () => {
       console.log(data.data);
       await axiosAPI.post(`/exec?e=PLAYERS&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
-      setSessionLeaderboard(data);
       setLeaderboards(data)
       console.log(data)
       await axiosAPI.post(`/exec?e=MATCH&q=${session.id}&f=session`);
