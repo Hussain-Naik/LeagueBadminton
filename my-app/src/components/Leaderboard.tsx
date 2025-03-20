@@ -3,16 +3,22 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Skeleton } from "primereact/skeleton";
 
-interface TableProps {
-    id: string;
-    league: string;
-    player: string;
-    leaderboard: number;
+type TableProps = {
+  id: string;
+  league?: string;
+  seed?: number;
+  session?: string;
+  player: string;
+  leaderboard: number;
 }
 
-const Leaderboard: React.FC<TableProps[]> = (props) => {
+type LeaderboardType = {
+  data?: TableProps[];
+}
+
+const Leaderboard: React.FC<LeaderboardType> = ({data}) => {
   const emptyData = [{ player: "Hussain", leaderboard: 2 }];
-  const { data } : any = props;
+  // const { data }: LeaderboardType = props;
   const [empty, setEmpty] = useState<boolean>(false);
   const leagueContext = {
     count: 22,

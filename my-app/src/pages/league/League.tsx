@@ -15,10 +15,21 @@ type SessionsType = {
   progress: number;
 };
 
+type TableProps = {
+  id: string;
+  league?: string;
+  player: string;
+  leaderboard: number;
+}
+
+type LeaderboardType = {
+  data?: TableProps[];
+}
+
 const League: React.FC = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
-  const [leaderboards, setLeaderboards] = useState<any>();
+  const [leaderboards, setLeaderboards] = useState<LeaderboardType>({});
   const navigate = useNavigate()
   //   const league = JSON.parse(localStorage.getItem("leagueToken"));
   const league = {
@@ -49,7 +60,7 @@ const League: React.FC = () => {
   }, []);
   return (
     <div className="grid">
-        <Leaderboard {...leaderboards}/>
+        <Leaderboard data={leaderboards.data}/>
       {sessionItems.map((session) => (
         <ListCards
           key={session.id}

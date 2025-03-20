@@ -24,7 +24,7 @@ const CreateLeague: React.FC<CreateProps> = ({ visible, setVisible }) => {
     try {
       const post = await axiosReq.post(`/exec?post=${jObj}`);
       const leagueObject = { title: "League", count: 4, ...post.data.data[0] };
-      const { postAPI }: any = await axiosAPI.post(
+      await axiosAPI.post(
         `/exec?e=SESSIONS&q=${leagueObject.id}&f=league`
       );
       setVisible();

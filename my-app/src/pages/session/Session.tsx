@@ -4,6 +4,19 @@ import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import MatchItem from "../../components/MatchItem";
 import FixtureItem from "../../components/FixtureItem";
 
+
+type TableProps = {
+  id: string;
+  seed: number;
+  session: string;
+  player: string;
+  leaderboard: number;
+}
+
+type SessionLeaderboardType = {
+  data?: TableProps[];
+}
+
 const Session: React.FC = () => {
   const session = {
     title: "DOUBLES ROUND ROBIN",
@@ -14,7 +27,7 @@ const Session: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [ready, setReady] = useState(false);
   const [games, setGames] = useState<any[]>([]);
-  const [leaderboards, setLeaderboards] = useState<any>();
+  const [leaderboards, setLeaderboards] = useState<SessionLeaderboardType>({});
 
   const setSessionLeaderboard = (data:any) => {
     localStorage.setItem('sessionLeaderboard', JSON.stringify(data))
@@ -32,6 +45,7 @@ const Session: React.FC = () => {
       var { data } = await axiosReq.get("");
       setSessionLeaderboard(data);
       setLeaderboards(data)
+      console.log(data)
       await axiosAPI.post(`/exec?e=MATCH&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
       data.data.map((match: any, index: number) => {
@@ -73,7 +87,7 @@ const Session: React.FC = () => {
   return (
     <div>
       <div className="grid">
-        <Leaderboard {...leaderboards} />
+        <Leaderboard data={leaderboards.data} />
 
         {ready
           ? fixtures.map((set: any, index) =>
