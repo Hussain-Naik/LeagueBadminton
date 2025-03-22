@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
-import counterReducer from "./counterSlice"
+import sessionReducer from "./sessionSlice"
 import leagueReducer from "./leagueSlice"
 
 
 const rootReducer = combineReducers({
-    counter: counterReducer,
+    session: sessionReducer,
     league: leagueReducer,
 });
 
