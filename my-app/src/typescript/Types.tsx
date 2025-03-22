@@ -1,7 +1,7 @@
 export type FixtureProps = {
     props: any;
     setGames?: () => void;
-    games: any;
+    games: number;
     setLoaded?: () => void;
     loaded: boolean;
     leaderboard: any;
@@ -67,3 +67,12 @@ export type SessionsType = {
     player_type: string;
     progress: number;
 };
+
+export type MatchType = {
+    id: string;
+    name: number;
+    player: string;
+    session: string;
+    team: number;
+    win: number;
+}

@@ -4,22 +4,17 @@ import ListCards from "../../components/ListCards";
 import Leaderboard from "../../components/Leaderboard";
 import { useNavigate } from "react-router";
 import { LeaderboardType, SessionsType } from "../../typescript/Types";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-
+import { setSession } from "../../reducers/sessionSlice";
 
 const League: React.FC = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
   const [leaderboards, setLeaderboards] = useState<LeaderboardType>({});
-  const navigate = useNavigate()
-  const league = useSelector((state: RootState) => state.league);
-  //   const league = JSON.parse(localStorage.getItem("leagueToken"));
-  // const league = {
-  //   count: 22,
-  //   id: "A2",
-  //   name: "tryout",
-  // };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const league = useSelector((state: RootState) => state.league.object);
 
   const handleMount = async () => {
     try {
@@ -28,10 +23,8 @@ const League: React.FC = () => {
       );
       var { data } = await axiosReq.get("");
       setLeaderboards(data);
-      console.log(data)
-      await axiosAPI.post(
-        `/exec?e=SESSIONS&q=${league.id}&f=league`
-      );
+      console.log(data);
+      await axiosAPI.post(`/exec?e=SESSIONS&q=${league.id}&f=league`);
       var { data } = await axiosReq.get("");
       setSessionItems(data.data);
       setLoaded(true);
@@ -43,7 +36,7 @@ const League: React.FC = () => {
   }, []);
   return (
     <div className="grid">
-        <Leaderboard data={leaderboards.data} name={league.name}/>
+      <Leaderboard data={leaderboards.data} name={league.name} />
       {sessionItems.map((session) => (
         <ListCards
           key={session.id}
@@ -53,6 +46,7 @@ const League: React.FC = () => {
           progress={session.progress}
           max={session.count}
           onClick={() => {
+            dispatch(setSession(session));
             navigate("/session/");
           }}
         />

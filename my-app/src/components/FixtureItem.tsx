@@ -27,7 +27,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
   const [sheetData, setSheetData] = useState([
     {
       session: session.id,
-      name: games.length + 1,
+      name: games,
       team: 1,
       player: data.filter(
         (player: any) => player.seed === team1_player1_index
@@ -36,7 +36,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
     },
     {
       session: session.id,
-      name: games.length + 1,
+      name: games,
       team: 1,
       player: data.filter(
         (player: any) => player.seed === team1_player2_index
@@ -45,7 +45,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
     },
     {
       session: session.id,
-      name: games.length + 1,
+      name: games,
       team: 2,
       player: data.filter(
         (player: any) => player.seed === team2_player1_index
@@ -54,7 +54,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
     },
     {
       session: session.id,
-      name: games.length + 1,
+      name: games,
       team: 2,
       player: data.filter(
         (player: any) => player.seed === team2_player2_index

@@ -36,13 +36,7 @@ const Home: React.FC = () => {
           label={league.name}
           sessionCount={league.count}
           onClick={() => {
-            dispatch(
-              setLeague({
-                count: league.count,
-                id: league.id,
-                name: league.name,
-              })
-            );
+            dispatch(setLeague(league));
             navigate("league/");
           }}
         />
