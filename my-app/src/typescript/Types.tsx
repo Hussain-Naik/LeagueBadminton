@@ -18,6 +18,7 @@ export type TableProps = {
 
 export type LeaderboardType = {
   data?: TableProps[];
+  name?: string;
 }
 
 export type CardListProp = {

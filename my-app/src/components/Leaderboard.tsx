@@ -6,15 +6,9 @@ import { LeaderboardType } from "../typescript/Types";
 
 
 
-const Leaderboard: React.FC<LeaderboardType> = ({data}) => {
+const Leaderboard: React.FC<LeaderboardType> = ({data, name}) => {
   const emptyData = [{ player: "Hussain", leaderboard: 2 }];
-  // const { data }: LeaderboardType = props;
   const [empty, setEmpty] = useState<boolean>(false);
-  const leagueContext = {
-    count: 22,
-    id: "A2",
-    name: "tryout",
-  };
 
   useEffect(() => {
     if (data === undefined) {
@@ -28,7 +22,7 @@ const Leaderboard: React.FC<LeaderboardType> = ({data}) => {
     <div className="col-12 lg:col-6">
       <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
         <span className="block text-500 font-medium mb-3">
-          {leagueContext?.name}
+          {name}
         </span>
         {empty ? (
           <DataTable value={data} stripedRows showGridlines size="small">

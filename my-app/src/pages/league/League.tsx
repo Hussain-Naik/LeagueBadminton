@@ -4,6 +4,8 @@ import ListCards from "../../components/ListCards";
 import Leaderboard from "../../components/Leaderboard";
 import { useNavigate } from "react-router";
 import { LeaderboardType, SessionsType } from "../../typescript/Types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 
 const League: React.FC = () => {
@@ -11,12 +13,13 @@ const League: React.FC = () => {
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
   const [leaderboards, setLeaderboards] = useState<LeaderboardType>({});
   const navigate = useNavigate()
+  const league = useSelector((state: RootState) => state.league);
   //   const league = JSON.parse(localStorage.getItem("leagueToken"));
-  const league = {
-    count: 22,
-    id: "A2",
-    name: "tryout",
-  };
+  // const league = {
+  //   count: 22,
+  //   id: "A2",
+  //   name: "tryout",
+  // };
 
   const handleMount = async () => {
     try {
@@ -40,7 +43,7 @@ const League: React.FC = () => {
   }, []);
   return (
     <div className="grid">
-        <Leaderboard data={leaderboards.data}/>
+        <Leaderboard data={leaderboards.data} name={league.name}/>
       {sessionItems.map((session) => (
         <ListCards
           key={session.id}

@@ -3,9 +3,11 @@ import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import ListCards from "../../components/ListCards";
 import { useNavigate } from "react-router";
 import { LeagueType } from "../../typescript/Types";
-
+import { useDispatch } from "react-redux";
+import { setLeague } from "../../reducers/leagueSlice";
 
 const Home: React.FC = () => {
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState<boolean>(false);
   const [leagueList, setLeagueList] = useState<LeagueType[]>([]);
   const navigate = useNavigate();
@@ -34,6 +36,13 @@ const Home: React.FC = () => {
           label={league.name}
           sessionCount={league.count}
           onClick={() => {
+            dispatch(
+              setLeague({
+                count: league.count,
+                id: league.id,
+                name: league.name,
+              })
+            );
             navigate("league/");
           }}
         />

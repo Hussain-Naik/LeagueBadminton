@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store/store'
+import { LeagueType } from '../typescript/Types'
 
-// Define a type for the slice state
-interface LeagueState {
-  value: string
-}
 
 // Define the initial state using that type
-const initialState: LeagueState = {
-  value: "default",
+const initialState: LeagueType = {
+  id: "default",
+  name: "",
+  count: 0,
 }
 
 export const leagueSlice = createSlice({
@@ -17,8 +16,10 @@ export const leagueSlice = createSlice({
   initialState,
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
-    setLeague: (state, action: PayloadAction<string>) => {
-      state.value = action.payload
+    setLeague: (state, action: PayloadAction<LeagueType>) => {
+      state.name = action.payload.name
+      state.id = action.payload.id
+      state.count = action.payload.count
     },
   },
 })
@@ -26,6 +27,6 @@ export const leagueSlice = createSlice({
 export const { setLeague } = leagueSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectLeague = (state: RootState) => state.league.value
+export const selectLeague = (state: RootState) => state.league
 
 export default leagueSlice.reducer
