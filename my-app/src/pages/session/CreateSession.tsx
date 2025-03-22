@@ -3,11 +3,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useNavigate } from "react-router";
-
-interface CreateProps {
-    visible: boolean;
-    setVisible: () => void;
-}
+import { CreateProps } from "../../typescript/Types";
 
 const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
   const [date, setDate] = useState<any>();

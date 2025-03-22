@@ -1,10 +1,6 @@
 import * as React from "react";
+import { MyButtonProps } from "../typescript/Types";
 
-interface MyButtonProps {
-  label?: string;
-  icon?: string;
-  onClick?: () => void;
-}
 
 const MyButtons: React.FC<MyButtonProps> = ({ label, icon, onClick }) => {
   return (

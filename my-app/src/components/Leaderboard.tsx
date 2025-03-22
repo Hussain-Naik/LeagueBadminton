@@ -2,19 +2,9 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Skeleton } from "primereact/skeleton";
+import { LeaderboardType } from "../typescript/Types";
 
-type TableProps = {
-  id: string;
-  league?: string;
-  seed?: number;
-  session?: string;
-  player: string;
-  leaderboard: number;
-}
 
-type LeaderboardType = {
-  data?: TableProps[];
-}
 
 const Leaderboard: React.FC<LeaderboardType> = ({data}) => {
   const emptyData = [{ player: "Hussain", leaderboard: 2 }];

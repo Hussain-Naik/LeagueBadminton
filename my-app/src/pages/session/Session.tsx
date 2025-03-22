@@ -3,19 +3,8 @@ import Leaderboard from "../../components/Leaderboard";
 import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import MatchItem from "../../components/MatchItem";
 import FixtureItem from "../../components/FixtureItem";
+import { LeaderboardType } from "../../typescript/Types";
 
-
-type TableProps = {
-  id: string;
-  seed: number;
-  session: string;
-  player: string;
-  leaderboard: number;
-}
-
-type SessionLeaderboardType = {
-  data?: TableProps[];
-}
 
 const Session: React.FC = () => {
   const session = {
@@ -27,7 +16,7 @@ const Session: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [ready, setReady] = useState(false);
   const [games, setGames] = useState<any[]>([]);
-  const [leaderboards, setLeaderboards] = useState<SessionLeaderboardType>({});
+  const [leaderboards, setLeaderboards] = useState<LeaderboardType>({});
 
   const handleMount = async () => {
     try {

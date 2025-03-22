@@ -5,11 +5,8 @@ import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import { useNavigate } from "react-router";
+import { CreateProps } from "../../typescript/Types";
 
-interface CreateProps {
-    visible: boolean;
-    setVisible: () => void;
-}
 
 const CreateLeague: React.FC<CreateProps> = ({ visible, setVisible }) => {
   const [iName, setIName] = useState<string>("");

@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import ListCards from "../../components/ListCards";
 import { useNavigate } from "react-router";
+import { LeagueType } from "../../typescript/Types";
 
-type LeagueType = {
-  id: string;
-  name: string;
-  count: number;
-};
 
 const Home: React.FC = () => {
   const [loaded, setLoaded] = useState<boolean>(false);

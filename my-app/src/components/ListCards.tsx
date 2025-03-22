@@ -1,15 +1,6 @@
 import React from "react";
 import { ProgressBar } from "primereact/progressbar";
-
-type CardListProp = {
-  label: string;
-  type: string;
-  sessionCount?: number;
-  playerCount?: number;
-  progress?: number;
-  max?: number;
-  onClick?: () => void;
-};
+import { CardListProp } from "../typescript/Types";
 
 const ListCards: React.FC<CardListProp> = ({
   label,

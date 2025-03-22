@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import Team from "./Team";
 import { Badge } from 'primereact/badge';
+import { TeamType } from "../typescript/Types";
 
-interface TeamType {
-    team1: {team: any[]},
-    team2: {team: any[]},
-}
 
 const MatchItem: React.FC = (props:any) => {
   const [team, setTeam] = useState<TeamType>({

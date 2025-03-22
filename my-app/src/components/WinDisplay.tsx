@@ -1,8 +1,6 @@
 import React from 'react'
+import { WinProp } from '../typescript/Types'
 
-interface WinProp {
-    result: number,
-}
 
 const WinDisplay: React.FC<WinProp> = ({result}) => {
   return (

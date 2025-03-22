@@ -1,15 +1,8 @@
 import React, { useState } from "react";
 import Team from "./Team";
 import { axiosReq } from "../api/axiosDefaults";
+import { FixtureProps } from "../typescript/Types";
 
-interface FixtureProps {
-  props: any;
-  setGames?: () => void;
-  games: any;
-  setLoaded?: () => void;
-  loaded: boolean;
-  leaderboard: any;
-}
 
 const FixtureItem: React.FC<FixtureProps> = ({
   props,

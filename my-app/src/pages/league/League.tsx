@@ -3,28 +3,8 @@ import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import ListCards from "../../components/ListCards";
 import Leaderboard from "../../components/Leaderboard";
 import { useNavigate } from "react-router";
+import { LeaderboardType, SessionsType } from "../../typescript/Types";
 
-type SessionsType = {
-  id: string;
-  league: string;
-  count: number;
-  date: string;
-  game_type: string;
-  player_count: number;
-  player_type: string;
-  progress: number;
-};
-
-type TableProps = {
-  id: string;
-  league?: string;
-  player: string;
-  leaderboard: number;
-}
-
-type LeaderboardType = {
-  data?: TableProps[];
-}
 
 const League: React.FC = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
