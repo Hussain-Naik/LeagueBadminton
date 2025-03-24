@@ -7,14 +7,15 @@ import { LeaderboardType, SessionsType } from "../../typescript/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setSession } from "../../reducers/sessionSlice";
+import { setLeaderboard } from "../../reducers/leaderboardSlice";
 
 const League: React.FC = () => {
   const [loaded, setLoaded] = useState<boolean>(false);
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
-  const [leaderboards, setLeaderboards] = useState<LeaderboardType>({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const league = useSelector((state: RootState) => state.league.object);
+  const leaderboards = useSelector((state: RootState) => state.leaderboard.object);
 
   const handleMount = async () => {
     try {
@@ -22,8 +23,7 @@ const League: React.FC = () => {
         `/exec?e=PARTICIPANTS&q=${league.id}&f=league`
       );
       var { data } = await axiosReq.get("");
-      setLeaderboards(data);
-      console.log(data);
+      dispatch(setLeaderboard(data))
       await axiosAPI.post(`/exec?e=SESSIONS&q=${league.id}&f=league`);
       var { data } = await axiosReq.get("");
       setSessionItems(data.data);
@@ -47,6 +47,7 @@ const League: React.FC = () => {
           max={session.count}
           onClick={() => {
             dispatch(setSession(session));
+            dispatch(setLeaderboard({}));
             navigate("/session/");
           }}
         />

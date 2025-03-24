@@ -3,9 +3,9 @@ import Leaderboard from "../../components/Leaderboard";
 import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import MatchItem from "../../components/MatchItem";
 import FixtureItem from "../../components/FixtureItem";
-import { LeaderboardType } from "../../typescript/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { setLeaderboard } from "../../reducers/leaderboardSlice";
 
 const Session: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const Session: React.FC = () => {
   const [loaded, setLoaded] = useState(false);
   const [ready, setReady] = useState(false);
   const [games, setGames] = useState<any[]>([]);
-  const [leaderboards, setLeaderboards] = useState<LeaderboardType>({});
+  const leaderboards = useSelector((state: RootState) => state.leaderboard.object);
 
   const handleMount = async () => {
     try {
@@ -27,7 +27,7 @@ const Session: React.FC = () => {
       setFixtures(data.data);
       await axiosAPI.post(`/exec?e=PLAYERS&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
-      setLeaderboards(data);
+      dispatch(setLeaderboard(data))
       await axiosAPI.post(`/exec?e=MATCH&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
       data.data.map((match: any, index: number) => {
