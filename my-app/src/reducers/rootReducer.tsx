@@ -1,13 +1,15 @@
 import { combineReducers } from "redux";
 import sessionReducer from "./sessionSlice"
 import leagueReducer from "./leagueSlice"
-import LeaderboardReducer from "./leaderboardSlice"
+import leaderboardReducer from "./leaderboardSlice"
+import loadedReducer from "./fixtureSlice"
 
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     league: leagueReducer,
-    leaderboard: LeaderboardReducer,
+    leaderboard: leaderboardReducer,
+    loaded: loadedReducer
 });
 
 export default rootReducer;

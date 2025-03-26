@@ -2,22 +2,21 @@ import React, { useState } from "react";
 import Team from "./Team";
 import { axiosReq } from "../api/axiosDefaults";
 import { FixtureProps } from "../typescript/Types";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { setLoaded } from "../reducers/fixtureSlice";
 
 
 const FixtureItem: React.FC<FixtureProps> = ({
   props,
   setGames,
   games,
-  setLoaded,
-  loaded,
   leaderboard,
 }) => {
+  const dispatch = useDispatch();
+  const session = useSelector((state: RootState) => state.session.session);
+  const loaded = useSelector((state: RootState) => state.loaded.loaded);
   const { data } = leaderboard;
-  const session = {
-    title: "DOUBLES ROUND ROBIN",
-    count: 4,
-    id: "B23",
-  };
   const {
     team1_player1_index,
     team1_player2_index,
@@ -95,8 +94,8 @@ const FixtureItem: React.FC<FixtureProps> = ({
       team1.map((player) => (player.win = 0));
     }
     // setGames((prevState) => [...prevState, sheetData]);
-    // setLoaded((prevState)=> !prevState)
-    // handleSubmit()
+    dispatch(setLoaded(!loaded))
+    handleSubmit()
   };
 
   const handleSubmit = async () => {
@@ -111,7 +110,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
     try {
       const post = await axiosReq.post(`/exec?post=${matchJSON}`);
       //   setGames([...games, post.data.data])
-      //   setLoaded((prevState:boolean)=> !prevState)
+      dispatch(setLoaded(true))
     } catch (error) {}
   };
 

@@ -6,13 +6,13 @@ import FixtureItem from "../../components/FixtureItem";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setLeaderboard } from "../../reducers/leaderboardSlice";
+import { setLoaded } from "../../reducers/sessionSlice";
 
 const Session: React.FC = () => {
   const dispatch = useDispatch();
-  const session = useSelector((state: RootState) => state.session.object);
+  const session = useSelector((state: RootState) => state.session.session);
   const [fixtures, setFixtures] = useState([]);
-  const [loaded, setLoaded] = useState(false);
-  const [ready, setReady] = useState(false);
+  const loaded = useSelector((state: RootState) => state.session.loaded);
   const [games, setGames] = useState<any[]>([]);
   const leaderboards = useSelector((state: RootState) => state.leaderboard.object);
 
@@ -38,8 +38,7 @@ const Session: React.FC = () => {
           setGames((prevState) => [...prevState, matches]);
         }
       });
-      setLoaded(true);
-      setReady(true);
+      dispatch(setLoaded(!loaded))
     } catch (err) {
       console.log(err);
     }
@@ -47,6 +46,7 @@ const Session: React.FC = () => {
 
   useEffect(() => {
     handleMount();
+    console.log(games)
   }, []);
 
   //   useEffect(() => {
@@ -70,14 +70,12 @@ const Session: React.FC = () => {
       <div className="grid">
         <Leaderboard data={leaderboards.data} name={session.date} />
 
-        {ready
+        {loaded
           ? fixtures.map((set: any, index) =>
               index === games.length % fixtures.length ? (
                 <FixtureItem
                   props={set}
                   //   setGames={setGames}
-                  loaded={loaded}
-                  setLoaded={() => setLoaded(!loaded)}
                   games={games.length + 1}
                   key={set.id}
                   leaderboard={leaderboards}

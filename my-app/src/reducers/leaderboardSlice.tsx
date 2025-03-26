@@ -26,6 +26,6 @@ export const leaderboardSlice = createSlice({
 export const { setLeaderboard } = leaderboardSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectLeaderboard = (state: RootState) => state.league.object;
+export const selectLeaderboard = (state: RootState) => state.leaderboard.object;
 
 export default leaderboardSlice.reducer;

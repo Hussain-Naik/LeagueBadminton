@@ -14,7 +14,7 @@ const League: React.FC = () => {
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const league = useSelector((state: RootState) => state.league.object);
+  const league = useSelector((state: RootState) => state.league.league);
   const leaderboards = useSelector((state: RootState) => state.leaderboard.object);
 
   const handleMount = async () => {

@@ -2,8 +2,6 @@ export type FixtureProps = {
     props: any;
     setGames?: () => void;
     games: number;
-    setLoaded?: () => void;
-    loaded: boolean;
     leaderboard: any;
 }
 

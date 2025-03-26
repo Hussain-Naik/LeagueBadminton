@@ -3,12 +3,13 @@ import type { RootState } from "../store/store";
 import { SessionsType } from "../typescript/Types";
 
 type SessionsSliceType = {
-  object: SessionsType;
+  session: SessionsType;
+  loaded:boolean
 };
 
 // Define the initial state using that type
 const initialState: SessionsSliceType = {
-  object: {
+  session: {
     id: "",
     league: "",
     count: 0,
@@ -18,6 +19,7 @@ const initialState: SessionsSliceType = {
     player_type: "",
     progress: 0,
   },
+  loaded: false
 };
 
 export const sessionSlice = createSlice({
@@ -27,14 +29,17 @@ export const sessionSlice = createSlice({
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
     setSession: (state, action: PayloadAction<SessionsType>) => {
-      state.object = action.payload
+      state.session = action.payload
+    },
+    setLoaded: (state, action: PayloadAction<boolean>) => {
+      state.loaded = action.payload
     },
   },
 });
 
-export const { setSession } = sessionSlice.actions;
+export const { setSession, setLoaded } = sessionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectSession = (state: RootState) => state.session.object;
+export const selectSession = (state: RootState) => state.session.session;
 
 export default sessionSlice.reducer;
