@@ -3,14 +3,15 @@ import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import ListCards from "../../components/ListCards";
 import Leaderboard from "../../components/Leaderboard";
 import { useNavigate } from "react-router";
-import { LeaderboardType, SessionsType } from "../../typescript/Types";
+import { SessionsType } from "../../typescript/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setSession } from "../../reducers/sessionSlice";
 import { setLeaderboard } from "../../reducers/leaderboardSlice";
+import { setLoaded } from "../../reducers/leagueSlice";
 
 const League: React.FC = () => {
-  const [loaded, setLoaded] = useState<boolean>(false);
+  const loaded = useSelector((state: RootState) => state.league.loaded);
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const League: React.FC = () => {
       await axiosAPI.post(`/exec?e=SESSIONS&q=${league.id}&f=league`);
       var { data } = await axiosReq.get("");
       setSessionItems(data.data);
-      setLoaded(true);
+      dispatch(setLoaded(!loaded))
     } catch (error) {}
   };
 
