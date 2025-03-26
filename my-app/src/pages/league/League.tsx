@@ -3,7 +3,6 @@ import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
 import ListCards from "../../components/ListCards";
 import Leaderboard from "../../components/Leaderboard";
 import { useNavigate } from "react-router";
-import { SessionsType } from "../../typescript/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setSession } from "../../reducers/sessionSlice";
