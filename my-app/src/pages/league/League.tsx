@@ -11,12 +11,11 @@ import { setLeaderboard } from "../../reducers/leaderboardSlice";
 import { setLoaded } from "../../reducers/leagueSlice";
 
 const League: React.FC = () => {
-  const loaded = useSelector((state: RootState) => state.league.loaded);
+  const { loaded, league } = useSelector((state: RootState) => state.league);
   const [sessionItems, setSessionItems] = useState<SessionsType[]>([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const league = useSelector((state: RootState) => state.league.league);
-  const leaderboards = useSelector((state: RootState) => state.leaderboard.object);
+  const leaderboards = useSelector((state: RootState) => state.leaderboard.leaderboards);
 
   const handleMount = async () => {
     try {

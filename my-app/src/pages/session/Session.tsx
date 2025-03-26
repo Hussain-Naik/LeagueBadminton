@@ -10,11 +10,10 @@ import { setLoaded } from "../../reducers/sessionSlice";
 
 const Session: React.FC = () => {
   const dispatch = useDispatch();
-  const session = useSelector((state: RootState) => state.session.session);
   const [fixtures, setFixtures] = useState([]);
-  const loaded = useSelector((state: RootState) => state.session.loaded);
   const [games, setGames] = useState<any[]>([]);
-  const leaderboards = useSelector((state: RootState) => state.leaderboard.object);
+  const leaderboards = useSelector((state: RootState) => state.leaderboard.leaderboards);
+  const { session, loaded } = useSelector((state: RootState) => state.session);
 
   const handleMount = async () => {
     try {
