@@ -1,10 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store/store";
-import { SessionsType } from "../typescript/Types";
+import { FixtureType, SessionsType } from "../typescript/Types";
 
 type SessionsSliceType = {
   session: SessionsType;
-  loaded:boolean
+  loaded: boolean;
+  fixtures: FixtureType[];
 };
 
 // Define the initial state using that type
@@ -19,7 +20,8 @@ const initialState: SessionsSliceType = {
     player_type: "",
     progress: 0,
   },
-  loaded: false
+  loaded: false,
+  fixtures: []
 };
 
 export const sessionSlice = createSlice({
@@ -34,10 +36,13 @@ export const sessionSlice = createSlice({
     setLoaded: (state, action: PayloadAction<boolean>) => {
       state.loaded = action.payload
     },
+    setFixtures: (state, action: PayloadAction<FixtureType[]>) => {
+      state.fixtures = action.payload
+    },
   },
 });
 
-export const { setSession, setLoaded } = sessionSlice.actions;
+export const { setSession, setLoaded, setFixtures } = sessionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSession = (state: RootState) => state.session.session;

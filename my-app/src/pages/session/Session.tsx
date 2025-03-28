@@ -6,14 +6,16 @@ import FixtureItem from "../../components/FixtureItem";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { setLeaderboard } from "../../reducers/leaderboardSlice";
-import { setLoaded } from "../../reducers/sessionSlice";
+import { setFixtures, setLoaded } from "../../reducers/sessionSlice";
+import { MatchType } from "../../typescript/Types";
+import { setGames } from "../../reducers/gamesSlice";
 
 const Session: React.FC = () => {
   const dispatch = useDispatch();
-  const [fixtures, setFixtures] = useState([]);
-  const [games, setGames] = useState<any[]>([]);
+  // const [games, setGames] = useState<MatchType[][]>([]);
+  const games = useSelector((state: RootState) => state.games.games);
   const leaderboards = useSelector((state: RootState) => state.leaderboard.leaderboards);
-  const { session, loaded } = useSelector((state: RootState) => state.session);
+  const { session, loaded, fixtures } = useSelector((state: RootState) => state.session);
 
   const handleMount = async () => {
     try {
@@ -23,18 +25,19 @@ const Session: React.FC = () => {
         }&f=fixture_api`
       );
       var { data } = await axiosReq.get("");
-      setFixtures(data.data);
+      dispatch(setFixtures(data.data))
       await axiosAPI.post(`/exec?e=PLAYERS&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
       dispatch(setLeaderboard(data))
       await axiosAPI.post(`/exec?e=MATCH&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
-      data.data.map((match: any, index: number) => {
+      data.data.map((match: MatchType, index: number) => {
         if (index % 4 === 0) {
           const matches = data.data.filter(
-            (item: any) => item.name === match.name
+            (item: MatchType) => item.name === match.name
           );
-          setGames((prevState) => [...prevState, matches]);
+          // setGames((prevState) => [...prevState, matches]);
+          dispatch(setGames(matches))
         }
       });
       dispatch(setLoaded(!loaded))
@@ -45,24 +48,24 @@ const Session: React.FC = () => {
 
   useEffect(() => {
     handleMount();
-    console.log(games)
   }, []);
 
-  //   useEffect(() => {
-  //     if (loaded) {
-  //       const score = [...leaderboards?.data];
-  //       const newgList = [...games];
-  //       score.map((item) => {
-  //         const count = newgList
-  //           .flat()
-  //           .filter(
-  //             (gameF) => gameF.player === item.player && gameF.win === 1
-  //           ).length;
-  //         item.leaderboard = count;
-  //       });
-  //       setLeaderboards({ ...leaderboards, data: score });
-  //     }
-  //   }, [games]);
+    useEffect(() => {
+      // if (loaded) {
+      //   const score = [...leaderboards?.data];
+      //   const newgList = [...games];
+      //   score.map((item) => {
+      //     const count = newgList
+      //       .flat()
+      //       .filter(
+      //         (gameF) => gameF.player === item.player && gameF.win === 1
+      //       ).length;
+      //     item.leaderboard = count;
+      //   });
+      //   setLeaderboards({ ...leaderboards, data: score });
+      // }
+      console.log(games)
+    }, [games]);
 
   return (
     <div>
@@ -70,7 +73,7 @@ const Session: React.FC = () => {
         <Leaderboard data={leaderboards.data} name={session.date} />
 
         {loaded
-          ? fixtures.map((set: any, index) =>
+          ? fixtures.map((set, index) =>
               index === games.length % fixtures.length ? (
                 <FixtureItem
                   props={set}
