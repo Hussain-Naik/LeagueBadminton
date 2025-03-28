@@ -37,7 +37,6 @@ const Session: React.FC = () => {
             (item: MatchType) => item.name === match.name
           );
           // setGames((prevState) => [...prevState, matches]);
-          console.log(matches)
           dispatch(setGames(matches))
         }
       });

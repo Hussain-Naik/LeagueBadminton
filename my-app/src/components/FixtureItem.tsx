@@ -94,7 +94,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
       team1.map((player) => (player.win = 0));
     }
     // setGames((prevState) => [...prevState, sheetData]);
-    dispatch(setGames(sheetData))
+    // dispatch(setGames(sheetData))
     dispatch(setLoaded(!loaded))
     handleSubmit()
   };
@@ -111,9 +111,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
     try {
       const post = await axiosReq.post(`/exec?post=${matchJSON}`);
       //   setGames([...games, post.data.data])
-      // dispatch(setGames(post.data.data))
-      console.log(post.data.data)
-      console.log(games)
+      dispatch(setGames(post.data.data))
       dispatch(setLoaded(true))
     } catch (error) {}
   };
