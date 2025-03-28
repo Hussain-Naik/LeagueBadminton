@@ -37,6 +37,7 @@ const Session: React.FC = () => {
             (item: MatchType) => item.name === match.name
           );
           // setGames((prevState) => [...prevState, matches]);
+          console.log(matches)
           dispatch(setGames(matches))
         }
       });
@@ -77,7 +78,6 @@ const Session: React.FC = () => {
               index === games.length % fixtures.length ? (
                 <FixtureItem
                   props={set}
-                  //   setGames={setGames}
                   games={games.length + 1}
                   key={set.id}
                   leaderboard={leaderboards}

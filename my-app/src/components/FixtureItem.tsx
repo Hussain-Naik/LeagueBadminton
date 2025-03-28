@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Team from "./Team";
 import { axiosReq } from "../api/axiosDefaults";
-import { FixtureProps } from "../typescript/Types";
+import { FixtureProps, MatchType } from "../typescript/Types";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setLoaded } from "../reducers/fixtureSlice";
+import { setGames } from "../reducers/gamesSlice";
 
 
 const FixtureItem: React.FC<FixtureProps> = ({
   props,
-  setGames,
   games,
   leaderboard,
 }) => {
@@ -23,7 +23,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
     team2_player1_index,
     team2_player2_index,
   } = props;
-  const [sheetData, setSheetData] = useState([
+  const [sheetData, setSheetData] = useState<MatchType[]>([
     {
       session: session.id,
       name: games,
@@ -94,6 +94,7 @@ const FixtureItem: React.FC<FixtureProps> = ({
       team1.map((player) => (player.win = 0));
     }
     // setGames((prevState) => [...prevState, sheetData]);
+    dispatch(setGames(sheetData))
     dispatch(setLoaded(!loaded))
     handleSubmit()
   };
@@ -110,6 +111,9 @@ const FixtureItem: React.FC<FixtureProps> = ({
     try {
       const post = await axiosReq.post(`/exec?post=${matchJSON}`);
       //   setGames([...games, post.data.data])
+      // dispatch(setGames(post.data.data))
+      console.log(post.data.data)
+      console.log(games)
       dispatch(setLoaded(true))
     } catch (error) {}
   };

@@ -67,7 +67,7 @@ export type SessionsType = {
 };
 
 export interface MatchType {
-    id: string;
+    id?: string;
     name: number;
     player: string;
     session: string;
