@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import { Calendar } from "primereact/calendar";
 import { MultiSelect } from "primereact/multiselect";
 import { ListBox } from "primereact/listbox";
@@ -7,10 +7,10 @@ import { Chips } from "primereact/chips";
 import { Button } from "primereact/button";
 import { ToggleButton } from "primereact/togglebutton";
 import { FloatLabel } from "primereact/floatlabel";
-import { axiosAPI, axiosReq } from '../../api/axiosDefaults';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { setSession } from '../../reducers/sessionSlice';
+import { axiosAPI, axiosReq } from "../../api/axiosDefaults";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { setSession } from "../../reducers/sessionSlice";
 
 const SessionSetting = () => {
   const dispatch = useDispatch();
@@ -20,22 +20,26 @@ const SessionSetting = () => {
   const [minReq, setMinReq] = useState(4);
   const [playerTypeChecked, setPlayerTypeChecked] = useState(false);
   const [gameTypeChecked, setGameTypeChecked] = useState(false);
-  const [date, setDate] = useState<Date>(new Date(useSelector((state: RootState) => state.session.date)));
+  const [date, setDate] = useState<Date>(
+    new Date(useSelector((state: RootState) => state.session.date))
+  );
   const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]);
   const [seed, setSeed] = useState<any>({});
   const [ready, setReady] = useState<boolean>(false);
-  const [reqMet, setReqMet] = useState<boolean>(selectedPlayers.length >= minReq);
+  const [reqMet, setReqMet] = useState<boolean>(
+    selectedPlayers.length >= minReq
+  );
   const emptyList = [{ name: "No Players Selected", code: "NY" }];
   const [loaded, setLoaded] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const ptValue:any = {
+  const ptValue: any = {
     headerCheckbox: {
-      className: "hidden"
-    }
-  }
+      className: "hidden",
+    },
+  };
 
-  const itemTemplate = (option:any) => {
+  const itemTemplate = (option: any) => {
     return (
       <div className="flex justify-content-between align-items-center">
         <div className="flex justify-content-between align-items-center gap-3">
@@ -54,7 +58,7 @@ const SessionSetting = () => {
     );
   };
 
-  const addNewPlayer = (e:any) => {
+  const addNewPlayer = (e: any) => {
     setSelectedPlayers([
       ...selectedPlayers,
       { id: null, league: league.id, player: e.value },
@@ -62,7 +66,7 @@ const SessionSetting = () => {
     setSeed({ ...seed, [e.value]: selectedPlayers.length + 1 });
   };
 
-  const addPlayer = (e:any) => {
+  const addPlayer = (e: any) => {
     if (e.value[selectedPlayers.length] === undefined) {
       const removed = selectedPlayers.filter(
         (person) => !e.value.includes(person) && person.id !== null
@@ -71,7 +75,7 @@ const SessionSetting = () => {
         setSelectedPlayers((prevState) => {
           return prevState.filter((item) => item !== person);
         });
-        setSeed((prevState:any) => {
+        setSeed((prevState: any) => {
           const key = person.player;
           const { [key]: removeKey, ...newItems } = prevState;
           return newItems;
@@ -79,9 +83,11 @@ const SessionSetting = () => {
       });
     } else {
       const keys = Object.keys(seed);
-      const added = e.value.filter((person:any) => !keys.includes(person.player));
-      added.map((person:any, index:number) => {
-        setSeed((prevState:any) => {
+      const added = e.value.filter(
+        (person: any) => !keys.includes(person.player)
+      );
+      added.map((person: any, index: number) => {
+        setSeed((prevState: any) => {
           return {
             ...prevState,
             [person.player]: index + selectedPlayers.length + 1,
@@ -94,7 +100,7 @@ const SessionSetting = () => {
     }
   };
 
-  const updateSeed = (option:any) => {
+  const updateSeed = (option: any) => {
     if (seed[option.player] + 1 > selectedPlayers.length) {
       setSeed({ ...seed, [option.player]: 1 });
     } else {
@@ -102,7 +108,7 @@ const SessionSetting = () => {
     }
   };
 
-  const updatePlayerList = (option:any) => {
+  const updatePlayerList = (option: any) => {
     const updatedList = selectedPlayers.filter(
       (person) => person.player !== option.player
     );
@@ -111,19 +117,19 @@ const SessionSetting = () => {
     const chipArray = newPeople.map((item) => item.player);
     setValue(chipArray);
     const key = option.player;
-    setSeed((prevState:any) => {
+    setSeed((prevState: any) => {
       const { [key]: removeKey, ...newItems } = prevState;
       return newItems;
     });
   };
 
-  const removeNewPlayer = (e:any) => {
+  const removeNewPlayer = (e: any) => {
     const newPeople = selectedPlayers.filter(
       (person) => person.player !== e.value
     );
     setSelectedPlayers(newPeople);
     const key = e.value;
-    setSeed((prevState:any) => {
+    setSeed((prevState: any) => {
       const { [key]: removeKey, ...newItems } = prevState;
       return newItems;
     });
@@ -132,7 +138,7 @@ const SessionSetting = () => {
   const autoSeed = () => {
     const keys = Object.keys(seed);
     keys.map((key, index) =>
-      setSeed((prevState:any) => {
+      setSeed((prevState: any) => {
         return { ...prevState, [key]: index + 1 };
       })
     );
@@ -157,18 +163,11 @@ const SessionSetting = () => {
       const keys = Object.keys(seed);
       const values = Object.values(seed);
       const post = await axiosReq.post(`/exec?post=${sessionJSON}`);
-      dispatch(setSession({...post.data.data[0], player_count: values.length}));
-      const { id } =
-        post.data.data[0];
-      // const sessionObject = {
-      //   title: `${player_type} ${game_type}`,
-      //   name: date,
-      //   count: values.length,
-      //   id: id,
-      // };
-      // setSessionContext(sessionObject);
-      // setSessionToken(sessionObject);
-      const postPlayers:any = {};
+      dispatch(
+        setSession({ ...post.data.data[0], player_count: values.length })
+      );
+      const { id } = post.data.data[0];
+      const postPlayers: any = {};
       keys.map((key, index) => {
         postPlayers[index + 1] = {
           sheetname: "PLAYERS",
@@ -179,9 +178,9 @@ const SessionSetting = () => {
       });
       const playerJSON = JSON.stringify(postPlayers);
       const postPlayer = await axiosReq.post(`/exec?post=${playerJSON}`);
-      const postParticipants:any = {};
+      const postParticipants: any = {};
       if (value.length > 0) {
-        value.map((item:any, index:number) => {
+        value.map((item: any, index: number) => {
           postParticipants[index + 1] = {
             sheetname: "PARTICIPANTS",
             player: item,
@@ -202,10 +201,8 @@ const SessionSetting = () => {
 
   const handleMount = async () => {
     try {
-      await axiosAPI.post(
-        `/exec?e=PARTICIPANTS&q=${league.id}&f=league`
-      );
-      const { data } = await axiosReq.get('');
+      await axiosAPI.post(`/exec?e=PARTICIPANTS&q=${league.id}&f=league`);
+      const { data } = await axiosReq.get("");
       setPlayers(data.data);
       setLoaded(true);
     } catch (err) {
@@ -379,4 +376,4 @@ const SessionSetting = () => {
   );
 };
 
-export default SessionSetting
+export default SessionSetting;

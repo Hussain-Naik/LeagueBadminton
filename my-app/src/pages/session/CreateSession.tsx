@@ -10,16 +10,11 @@ import { setSessionDate, setSettingDate } from "../../reducers/sessionSlice";
 const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
   const [date, setDate] = useState<any>();
   const dispatch = useDispatch();
-  const [sessionContext, setSessionContext ] = useState<any>({});
   const navigate = useNavigate();
 
   const handleClick = (e:any) => {
     setDate(e.value);
   };
-
-  const setSessionToken = (data:any) => {
-    localStorage.setItem('leagueSessionToken', JSON.stringify(data))
-  }
 
   return (
     <div>
@@ -54,16 +49,6 @@ const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
               <Button
                 label="Submit"
                 onClick={() => {
-                  setSessionContext({
-                    ...sessionContext,
-                    name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
-                    date: date
-                  });
-                  setSessionToken({
-                    ...sessionContext,
-                    name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
-                    date: date
-                  });
                   dispatch(setSessionDate(`${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`))
                   dispatch(setSettingDate(date.toISOString()))
                   setVisible();
