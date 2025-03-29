@@ -6,6 +6,7 @@ type SessionsSliceType = {
   session: SessionsType;
   loaded: boolean;
   fixtures: FixtureType[];
+  date: string;
 };
 
 // Define the initial state using that type
@@ -21,7 +22,8 @@ const initialState: SessionsSliceType = {
     progress: 0,
   },
   loaded: false,
-  fixtures: []
+  fixtures: [],
+  date: ""
 };
 
 export const sessionSlice = createSlice({
@@ -39,10 +41,17 @@ export const sessionSlice = createSlice({
     setFixtures: (state, action: PayloadAction<FixtureType[]>) => {
       state.fixtures = action.payload
     },
+    setSessionDate: (state, action: PayloadAction<string>) => {
+      state.session.date = action.payload
+    },
+    setSettingDate: (state, action: PayloadAction<string>) => {
+      state.date = action.payload
+    },
+    
   },
 });
 
-export const { setSession, setLoaded, setFixtures } = sessionSlice.actions;
+export const { setSession, setLoaded, setFixtures, setSessionDate, setSettingDate } = sessionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSession = (state: RootState) => state.session.session;

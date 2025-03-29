@@ -4,9 +4,12 @@ import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { useNavigate } from "react-router";
 import { CreateProps } from "../../typescript/Types";
+import { useDispatch } from "react-redux";
+import { setSessionDate, setSettingDate } from "../../reducers/sessionSlice";
 
 const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
   const [date, setDate] = useState<any>();
+  const dispatch = useDispatch();
   const [sessionContext, setSessionContext ] = useState<any>({});
   const navigate = useNavigate();
 
@@ -61,6 +64,8 @@ const CreateSession: React.FC<CreateProps> = ({ visible, setVisible }) => {
                     name: `${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`,
                     date: date
                   });
+                  dispatch(setSessionDate(`${date.toLocaleDateString()} ${date.toLocaleTimeString().slice(0, 5)}:00`))
+                  dispatch(setSettingDate(date.toISOString()))
                   setVisible();
                   navigate("/session/create/");
                 }}

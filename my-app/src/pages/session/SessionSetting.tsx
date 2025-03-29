@@ -8,22 +8,19 @@ import { Button } from "primereact/button";
 import { ToggleButton } from "primereact/togglebutton";
 import { FloatLabel } from "primereact/floatlabel";
 import { axiosAPI, axiosReq } from '../../api/axiosDefaults';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { setSession } from '../../reducers/sessionSlice';
 
 const SessionSetting = () => {
+  const dispatch = useDispatch();
+  const { league } = useSelector((state: RootState) => state.league);
   const [players, setPlayers] = useState([]);
   const [value, setValue] = useState<any>([]);
   const [minReq, setMinReq] = useState(4);
   const [playerTypeChecked, setPlayerTypeChecked] = useState(false);
   const [gameTypeChecked, setGameTypeChecked] = useState(false);
-  const sc:any = localStorage.getItem('leagueSessionToken')
-  console.log(sc)
-  const sessionContext = JSON.parse(sc);
-  const league = {
-    count: 22,
-    id: "A2",
-    name: "tryout",
-  };
-  const [date, setDate] = useState(sessionContext?.date);
+  const [date, setDate] = useState<Date>(new Date(useSelector((state: RootState) => state.session.date)));
   const [selectedPlayers, setSelectedPlayers] = useState<any[]>([]);
   const [seed, setSeed] = useState<any>({});
   const [ready, setReady] = useState<boolean>(false);
@@ -160,14 +157,15 @@ const SessionSetting = () => {
       const keys = Object.keys(seed);
       const values = Object.values(seed);
       const post = await axiosReq.post(`/exec?post=${sessionJSON}`);
-      const { id, date, player_count, game_type, player_type } =
+      dispatch(setSession({...post.data.data[0], player_count: values.length}));
+      const { id } =
         post.data.data[0];
-      const sessionObject = {
-        title: `${player_type} ${game_type}`,
-        name: date,
-        count: values.length,
-        id: id,
-      };
+      // const sessionObject = {
+      //   title: `${player_type} ${game_type}`,
+      //   name: date,
+      //   count: values.length,
+      //   id: id,
+      // };
       // setSessionContext(sessionObject);
       // setSessionToken(sessionObject);
       const postPlayers:any = {};
@@ -203,7 +201,6 @@ const SessionSetting = () => {
   };
 
   const handleMount = async () => {
-    setDate(sessionContext.date);
     try {
       await axiosAPI.post(
         `/exec?e=PARTICIPANTS&q=${league.id}&f=league`
@@ -263,7 +260,7 @@ const SessionSetting = () => {
       <Calendar
         id="calendar"
         value={date}
-        onChange={(e) => setDate(e.value)}
+        onChange={(e: any) => setDate(e.value)}
         dateFormat="dd/mm/yy"
         showIcon
         showTime

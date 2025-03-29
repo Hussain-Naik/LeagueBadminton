@@ -16,6 +16,7 @@ const Session: React.FC = () => {
   const games = useSelector((state: RootState) => state.games.games);
   const leaderboards = useSelector((state: RootState) => state.leaderboard.leaderboards);
   const { session, loaded, fixtures } = useSelector((state: RootState) => state.session);
+  console.log(session)
 
   const handleMount = async () => {
     try {
