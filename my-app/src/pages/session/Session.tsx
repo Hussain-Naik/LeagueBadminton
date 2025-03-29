@@ -53,7 +53,6 @@ const Session: React.FC = () => {
     useEffect(() => {
       if (loaded) {
         var score: TableProps[] = [];
-        // score = [...leaderboards.data];
         var newgList = [...games];
         leaderboards.data?.map((item) => {
           var count = newgList
