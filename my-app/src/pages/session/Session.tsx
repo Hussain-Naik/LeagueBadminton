@@ -5,9 +5,9 @@ import MatchItem from "../../components/MatchItem";
 import FixtureItem from "../../components/FixtureItem";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setLeaderboard } from "../../reducers/leaderboardSlice";
+import { setLeaderboard, updateLeaderboard } from "../../reducers/leaderboardSlice";
 import { setFixtures, setLoaded } from "../../reducers/sessionSlice";
-import { MatchType } from "../../typescript/Types";
+import { MatchType, TableProps } from "../../typescript/Types";
 import { setGames } from "../../reducers/gamesSlice";
 
 const Session: React.FC = () => {
@@ -51,20 +51,21 @@ const Session: React.FC = () => {
   }, []);
 
     useEffect(() => {
-      // if (loaded) {
-      //   const score = [...leaderboards?.data];
-      //   const newgList = [...games];
-      //   score.map((item) => {
-      //     const count = newgList
-      //       .flat()
-      //       .filter(
-      //         (gameF) => gameF.player === item.player && gameF.win === 1
-      //       ).length;
-      //     item.leaderboard = count;
-      //   });
-      //   setLeaderboards({ ...leaderboards, data: score });
-      // }
-      console.log(games)
+      if (loaded) {
+        var score: TableProps[] = [];
+        // score = [...leaderboards.data];
+        var newgList = [...games];
+        leaderboards.data?.map((item) => {
+          var count = newgList
+            .flat()
+            .filter(
+              (gameF) => gameF.player === item.player && gameF.win === 1
+            ).length;
+            score = [...score, {...item, leaderboard: count}]
+            
+        });
+        dispatch(updateLeaderboard(score))
+      }      
     }, [games]);
 
   return (

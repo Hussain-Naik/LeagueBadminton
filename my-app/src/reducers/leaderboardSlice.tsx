@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store/store";
-import { LeaderboardType } from "../typescript/Types";
+import { LeaderboardType, TableProps } from "../typescript/Types";
 
 type LeaderboardSliceType = {
   leaderboards: LeaderboardType;
@@ -20,10 +20,13 @@ export const leaderboardSlice = createSlice({
     setLeaderboard: (state, action: PayloadAction<LeaderboardType>) => {
       state.leaderboards = action.payload;
     },
+    updateLeaderboard: (state, action: PayloadAction<TableProps[]>) => {
+      state.leaderboards.data = action.payload;
+    },
   },
 });
 
-export const { setLeaderboard } = leaderboardSlice.actions;
+export const { setLeaderboard, updateLeaderboard } = leaderboardSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLeaderboard = (state: RootState) => state.leaderboard.leaderboards;
