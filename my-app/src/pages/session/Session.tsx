@@ -25,6 +25,8 @@ const Session: React.FC = () => {
   );
 
   const handleMount = async () => {
+    dispatch(setSLoaded(false));
+    dispatch(resetGames());
     try {
       await axiosAPI.post(
         `/exec?e=FIXTURES&q=${
@@ -47,7 +49,7 @@ const Session: React.FC = () => {
           dispatch(setGames(matches));
         }
       });
-      dispatch(setSLoaded(!loaded));
+      dispatch(setSLoaded(true));
     } catch (err) {
       console.log(err);
     }

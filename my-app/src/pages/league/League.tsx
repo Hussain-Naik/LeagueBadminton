@@ -17,6 +17,7 @@ const League: React.FC = () => {
   const leaderboards = useSelector((state: RootState) => state.leaderboard.leaderboards);
 
   const handleMount = async () => {
+    dispatch(setSessionItems([]))
     try {
       await axiosAPI.post(
         `/exec?e=PARTICIPANTS&q=${league.id}&f=league`
