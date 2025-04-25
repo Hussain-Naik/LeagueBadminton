@@ -5,18 +5,24 @@ import MatchItem from "../../components/MatchItem";
 import FixtureItem from "../../components/FixtureItem";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setLeaderboard, updateLeaderboard } from "../../reducers/leaderboardSlice";
-import { setFixtures, setLoaded } from "../../reducers/sessionSlice";
+import {
+  setLeaderboard,
+  updateLeaderboard,
+} from "../../reducers/leaderboardSlice";
+import { setFixtures, setSLoaded } from "../../reducers/sessionSlice";
 import { MatchType, TableProps } from "../../typescript/Types";
-import { setGames } from "../../reducers/gamesSlice";
+import { resetGames, setGames } from "../../reducers/gamesSlice";
 
 const Session: React.FC = () => {
   const dispatch = useDispatch();
   // const [games, setGames] = useState<MatchType[][]>([]);
   const games = useSelector((state: RootState) => state.games.games);
-  const leaderboards = useSelector((state: RootState) => state.leaderboard.leaderboards);
-  const { session, loaded, fixtures } = useSelector((state: RootState) => state.session);
-  console.log(session)
+  const leaderboards = useSelector(
+    (state: RootState) => state.leaderboard.leaderboards
+  );
+  const { session, loaded, fixtures } = useSelector(
+    (state: RootState) => state.session
+  );
 
   const handleMount = async () => {
     try {
@@ -26,10 +32,10 @@ const Session: React.FC = () => {
         }&f=fixture_api`
       );
       var { data } = await axiosReq.get("");
-      dispatch(setFixtures(data.data))
+      dispatch(setFixtures(data.data));
       await axiosAPI.post(`/exec?e=PLAYERS&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
-      dispatch(setLeaderboard(data))
+      dispatch(setLeaderboard(data));
       await axiosAPI.post(`/exec?e=MATCH&q=${session.id}&f=session`);
       var { data } = await axiosReq.get("");
       data.data.map((match: MatchType, index: number) => {
@@ -38,10 +44,10 @@ const Session: React.FC = () => {
             (item: MatchType) => item.name === match.name
           );
           // setGames((prevState) => [...prevState, matches]);
-          dispatch(setGames(matches))
+          dispatch(setGames(matches));
         }
       });
-      dispatch(setLoaded(!loaded))
+      dispatch(setSLoaded(!loaded));
     } catch (err) {
       console.log(err);
     }
@@ -51,22 +57,21 @@ const Session: React.FC = () => {
     handleMount();
   }, []);
 
-    useEffect(() => {
-      if (loaded) {
-        var score: TableProps[] = [];
-        var newgList = [...games];
-        leaderboards.data?.map((item) => {
-          var count = newgList
-            .flat()
-            .filter(
-              (gameF) => gameF.player === item.player && gameF.win === 1
-            ).length;
-            score = [...score, {...item, leaderboard: count}]
-            
-        });
-        dispatch(updateLeaderboard(score))
-      }      
-    }, [games]);
+  useEffect(() => {
+    if (loaded === true) {
+      var score: TableProps[] = [];
+      var newgList = [...games];
+      leaderboards.data?.map((item) => {
+        var count = newgList
+          .flat()
+          .filter(
+            (gameF) => gameF.player === item.player && gameF.win === 1
+          ).length;
+        score = [...score, { ...item, leaderboard: count }];
+      });
+      dispatch(updateLeaderboard(score));
+    }
+  }, [games]);
 
   return (
     <div>
@@ -85,9 +90,8 @@ const Session: React.FC = () => {
               ) : null
             )
           : null}
-        {games.map((game, index) => (
-          <MatchItem {...game} key={index} />
-        ))}
+        {games.map((game, index) => <MatchItem {...game} key={index} />)
+        }
       </div>
     </div>
   );

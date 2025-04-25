@@ -22,6 +22,6 @@ export const fixtureSlice = createSlice({
 export const { setLoaded } = fixtureSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectLoaded = (state: RootState) => state.loaded;
+export const selectLoaded = (state: RootState) => state.loaded.loaded;
 
 export default fixtureSlice.reducer;

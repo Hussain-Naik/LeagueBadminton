@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { LeagueType } from "../../typescript/Types";
 import { useDispatch } from "react-redux";
 import { setLeague } from "../../reducers/leagueSlice";
+import { setLeaderboard } from "../../reducers/leaderboardSlice";
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const Home: React.FC = () => {
           sessionCount={league.count}
           onClick={() => {
             dispatch(setLeague(league));
+            dispatch(setLeaderboard({}));
             navigate("league/");
           }}
         />

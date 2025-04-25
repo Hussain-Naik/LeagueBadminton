@@ -35,7 +35,7 @@ export const sessionSlice = createSlice({
     setSession: (state, action: PayloadAction<SessionsType>) => {
       state.session = action.payload
     },
-    setLoaded: (state, action: PayloadAction<boolean>) => {
+    setSLoaded: (state, action: PayloadAction<boolean>) => {
       state.loaded = action.payload
     },
     setFixtures: (state, action: PayloadAction<FixtureType[]>) => {
@@ -51,7 +51,7 @@ export const sessionSlice = createSlice({
   },
 });
 
-export const { setSession, setLoaded, setFixtures, setSessionDate, setSettingDate } = sessionSlice.actions;
+export const { setSession, setSLoaded, setFixtures, setSessionDate, setSettingDate } = sessionSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectSession = (state: RootState) => state.session.session;

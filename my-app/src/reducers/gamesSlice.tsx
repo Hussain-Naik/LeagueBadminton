@@ -20,12 +20,15 @@ export const gameSlice = createSlice({
     setGames: (state, action: PayloadAction<MatchType[]>) => {
       state.games = [...state.games, action.payload];
     },
+    resetGames: (state) => {
+      state.games = []
+    },
   },
 });
 
-export const { setGames } = gameSlice.actions;
+export const { setGames, resetGames } = gameSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectLoaded = (state: RootState) => state.loaded;
+export const selectGame = (state: RootState) => state.games.games;
 
 export default gameSlice.reducer;
