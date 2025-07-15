@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Team from "./Team";
 import { axiosReq } from "../api/axiosDefaults";
 import { FixtureProps, MatchType } from "../typescript/Types";
@@ -115,6 +115,10 @@ const FixtureItem: React.FC<FixtureProps> = ({
       dispatch(setLoaded(true))
     } catch (error) {}
   };
+
+  useEffect(() => {
+      dispatch(setLoaded(false));
+  }, []);
 
   return (
     <div className="col-12 lg:col-6">
