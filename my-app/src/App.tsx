@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Route, Routes } from "react-router";
 import Header from "./components/Header";
@@ -7,8 +7,13 @@ import Home from "./pages/home/Home";
 import League from "./pages/league/League";
 import Session from "./pages/session/Session";
 import SessionSetting from "./pages/session/SessionSetting";
+import { persistor } from "./store/store";
 
 function App() {
+
+  useEffect(()=>{
+    persistor.purge();
+  }, [])
   return (
     <div className="flex flex-column justify-content-between min-h-screen mx-3">
       <Header />
