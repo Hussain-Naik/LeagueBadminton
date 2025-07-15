@@ -12,10 +12,14 @@ import {
 import { setFixtures, setSLoaded } from "../../reducers/sessionSlice";
 import { MatchType, TableProps } from "../../typescript/Types";
 import { resetGames, setGames } from "../../reducers/gamesSlice";
+import { Sidebar } from "primereact/sidebar";
+import { setVisible } from "../../reducers/sidebarVisible";
+import FixtureListItem from "../../components/FixtureListItem";
 
 const Session: React.FC = () => {
   const dispatch = useDispatch();
   // const [games, setGames] = useState<MatchType[][]>([]);
+  const visible = useSelector((state: RootState) => state.sidebar.visible);
   const games = useSelector((state: RootState) => state.games.games);
   const leaderboards = useSelector(
     (state: RootState) => state.leaderboard.leaderboards
@@ -79,6 +83,23 @@ const Session: React.FC = () => {
     <div>
       <div className="grid">
         <Leaderboard data={leaderboards.data} name={session.date} />
+          <Sidebar
+            visible={visible}
+            position="right"
+            onHide={() => dispatch(setVisible(!visible))}
+          >
+            {loaded ? 
+              fixtures.map((set, index) =>
+                <FixtureListItem
+                  props={set}
+                  games={index + 1}
+                  key={set.id}
+                  leaderboard={leaderboards}
+                />
+              )
+            : null}
+            
+          </Sidebar>
 
         {loaded
           ? fixtures.map((set, index) =>
@@ -92,8 +113,9 @@ const Session: React.FC = () => {
               ) : null
             )
           : null}
-        {games.map((game, index) => <MatchItem {...game} key={index} />)
-        }
+        {games.map((game, index) => (
+          <MatchItem {...game} key={index} />
+        ))}
       </div>
     </div>
   );

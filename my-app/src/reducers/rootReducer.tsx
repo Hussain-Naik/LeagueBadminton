@@ -4,6 +4,7 @@ import leagueReducer from "./leagueSlice"
 import leaderboardReducer from "./leaderboardSlice"
 import loadedReducer from "./fixtureSlice"
 import gameReducer from "./gamesSlice"
+import sidebarReducer from "./sidebarVisible"
 
 
 const rootReducer = combineReducers({
@@ -11,7 +12,8 @@ const rootReducer = combineReducers({
     league: leagueReducer,
     leaderboard: leaderboardReducer,
     loaded: loadedReducer,
-    games: gameReducer
+    games: gameReducer,
+    sidebar: sidebarReducer
 });
 
 export default rootReducer;
