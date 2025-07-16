@@ -12,8 +12,7 @@ import {
 import { setFixtures, setSLoaded } from "../../reducers/sessionSlice";
 import { MatchType, TableProps } from "../../typescript/Types";
 import { resetGames, setGames } from "../../reducers/gamesSlice";
-import { Panel } from 'primereact/panel';
-import { setVisible } from "../../reducers/sidebarVisible";
+import { Panel } from "primereact/panel";
 import FixtureListItem from "../../components/FixtureListItem";
 
 const Session: React.FC = () => {
@@ -79,44 +78,45 @@ const Session: React.FC = () => {
     }
   }, [games]);
 
-  const headerTemplate = (options:any) => {
-        const className = `${options.className} justify-content-space-between`;
+  const headerTemplate = (options: any) => {
+    const className = `${options.className} justify-content-space-between`;
 
-        return (
-            <div className={className}>
-                <div className="flex align-items-center gap-2">
-                  {fixtures.map((set, index) =>
-              index === games.length % fixtures.length ? (
-                <FixtureItem
-                  props={set}
-                  games={games.length + 1}
-                  key={set.id}
-                  leaderboard={leaderboards}
-                />
-              ) : null
-            ) }
-                </div>
-                <div>
-                    {options.togglerElement}
-                </div>
-            </div>
-        );
-    };
+    return (
+      <div className={className}>
+        <div className="flex flex-grow-1 align-items-center gap-2">
+          {fixtures.map((set, index) =>
+            index === games.length % fixtures.length ? (
+              <FixtureItem
+                props={set}
+                games={games.length + 1}
+                key={set.id}
+                leaderboard={leaderboards}
+              />
+            ) : null
+          )}
+        </div>
+        <div>{options.togglerElement}</div>
+      </div>
+    );
+  };
 
   return (
     <div>
       <div className="grid">
         <Leaderboard data={leaderboards.data} name={session.date} />
+        <div className="col-12">
           <Panel headerTemplate={headerTemplate} toggleable>
-            {fixtures.map((set, index) =>
-                <FixtureListItem
-                  props={set}
-                  games={index + 1}
-                  key={set.id}
-                  leaderboard={leaderboards}
-                />
-              )}
-        </Panel>
+            {fixtures.map((set, index) => (
+              <FixtureListItem
+                props={set}
+                games={index + 1}
+                key={set.id}
+                leaderboard={leaderboards}
+              />
+            ))}
+          </Panel>
+        </div>
+          
 
         {loaded
           ? fixtures.map((set, index) =>
